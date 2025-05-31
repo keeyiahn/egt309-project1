@@ -18,6 +18,7 @@ def merge_datasets(customers, orders, order_items, order_payments, order_reviews
         .merge(products, on="product_id", how="left") \
         .merge(sellers, on="seller_id", how="left") \
         .merge(product_cats, on="product_category_name", how="left")
+    
     print("---- BEFORE CLEANING ----")
     print(merged_dataframe.shape)
     print(merged_dataframe.columns)
@@ -58,11 +59,68 @@ def clean_dataset(df: pd.DataFrame) -> pd.DataFrame:
         'order_delivered_carrier_date'     # Operational event
     ], inplace=True)
     
+    df.drop(columns=['review_comment_title', 'review_comment_message'], inplace=True)
+
+    # List of incomplete order columns (all must be NaN to be dropped)
+    cols_to_check = [
+        'order_item_id',
+        'product_id',
+        'seller_id',
+        'shipping_limit_date',
+        'price',
+        'freight_value',
+        'seller_zip_code_prefix',
+        'seller_city',
+        'seller_state'
+    ]
+
+    # Drop rows where ALL of these columns are missing
+    df = df[~df[cols_to_check].isnull().all(axis=1)]
+
+    # Define review-related columns
+    review_cols = [
+        'review_id',
+        'review_score',
+        'review_creation_date',
+        'review_answer_timestamp'
+    ]
+    
+    # Drop rows where ALL review-related columns are missing
+    df = df[~df[review_cols].isnull().all(axis=1)]
+
+    # Identify rows missing all key product-related fields
+    product_missing_rows = df[
+        df[['product_category_name', 'product_name_lenght', 'product_description_lenght', 'product_photos_qty']]
+        .isnull()
+        .all(axis=1)
+    ]
+
+    # Drop them from merged_df
+    df = df.drop(index=product_missing_rows.index)
+
     # Convert 'freight_value' to numeric, handling errors
     df['freight_value'] = pd.to_numeric(df['freight_value'], errors='coerce')
-    
-    # Fill NaN values with 0
-    df.fillna(0, inplace=True)
+
+    # Define the columns to impute
+    dim_cols = ['product_weight_g', 'product_length_cm', 'product_height_cm', 'product_width_cm']
+
+    # Group by product_category_name_english and compute the mean for each dimension
+    category_means = df.groupby('product_category_name_english')[dim_cols].mean()
+
+    # Function to fill missing values using category mean
+    def impute_with_category_mean(row):
+        if pd.isnull(row['product_weight_g']):
+            row['product_weight_g'] = category_means.loc[row['product_category_name_english'], 'product_weight_g']
+        if pd.isnull(row['product_length_cm']):
+            row['product_length_cm'] = category_means.loc[row['product_category_name_english'], 'product_length_cm']
+        if pd.isnull(row['product_height_cm']):
+            row['product_height_cm'] = category_means.loc[row['product_category_name_english'], 'product_height_cm']
+        if pd.isnull(row['product_width_cm']):
+            row['product_width_cm'] = category_means.loc[row['product_category_name_english'], 'product_width_cm']
+        return row
+
+    # Apply the imputation row-wise
+    df = df.apply(impute_with_category_mean, axis=1)
 
     print("---- AFTER CLEANING ----")
     print(df.shape)

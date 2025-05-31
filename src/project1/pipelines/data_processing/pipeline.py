@@ -34,5 +34,10 @@ def create_pipeline(**kwargs):
             func=clean_dataset,
             inputs="merged_dataset",
             outputs="cleaned_dataset"
+        ),
+        node(
+            func=transform_dataset,
+            inputs="cleaned_dataset",
+            outputs="transformed_dataset"
         )
     ])

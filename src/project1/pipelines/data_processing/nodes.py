@@ -84,7 +84,7 @@ def clean_dataset(df: pd.DataFrame) -> pd.DataFrame:
         'review_creation_date',
         'review_answer_timestamp'
     ]
-    
+
     # Drop rows where ALL review-related columns are missing
     df = df[~df[review_cols].isnull().all(axis=1)]
 
@@ -132,3 +132,36 @@ def clean_dataset(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
+def transform_dataset(df):
+    # Drop irrelevant or redundant columns for repeat buyer prediction
+    cols_to_drop = [
+        'order_id',                     # Unique ID, not useful for modeling
+        'customer_id',                  # Redundant with customer_unique_id
+        'review_id',                    # Unique per review, not predictive
+        'product_id',                   # Too specific, not useful unless modeling per product
+        'seller_id',                    # High cardinality, low interpretability
+        'shipping_limit_date',         # Redundant with delivery_time_days
+        'review_creation_date',        # Already captured by review_score/sentiment
+        'order_item_id',               # Row-level ordering, not predictive
+        'product_category_name',       # Redundant with English translation
+        'seller_zip_code_prefix',      # Too granular
+    ]
+
+    # Drop the columns
+    df.drop(columns=cols_to_drop, inplace=True)
+
+    # Confirm removal
+    print(f"Remaining columns: {df.columns.tolist()}")
+
+    # Count number of orders per customer
+    customer_order_counts = df['customer_unique_id'].value_counts().reset_index()
+    customer_order_counts.columns = ['customer_unique_id', 'order_count']
+
+    # Label as repeat (1) or non-repeat (0) buyer
+    customer_order_counts['is_repeat_buyer'] = customer_order_counts['order_count'].apply(lambda x: 1 if x > 1 else 0)
+
+    # Display summary
+    print(customer_order_counts['is_repeat_buyer'].value_counts())
+    customer_order_counts.head()
+
+    return df

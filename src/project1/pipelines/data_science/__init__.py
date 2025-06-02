@@ -1,1 +1,1 @@
-rom .pipeline import create_model_pipeline
+from .pipeline import create_model_pipeline

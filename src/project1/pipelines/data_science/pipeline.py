@@ -5,14 +5,13 @@ def create_model_pipeline(**kwargs):
     return pipeline(
         [
             node(
-                func= ,
-                inputs= ,
-                outputs= ,
-                name= ,
+                func=get_dataset_info,
+                inputs=[
+                    "merged_dataset",
+                    "cleaned_dataset"
+                ],
+                outputs="dataframes"
             ),
 
         ]
     )
-
-def hi():
-    return

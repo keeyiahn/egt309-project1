@@ -166,5 +166,3 @@ def transform_dataset(df):
 
     return df
 
-def test_node():
-    return

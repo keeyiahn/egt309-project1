@@ -6,10 +6,7 @@ def create_model_pipeline(**kwargs):
         [
             node(
                 func=get_dataset_info,
-                inputs=[
-                    "merged_dataset",
-                    "cleaned_dataset"
-                ],
+                inputs="cleaned_dataset",
                 outputs="dataframes"
             ),
 

@@ -1,5 +1,4 @@
 # Raw datasets
-
 customers_data:
   filepath: data/01_raw/olist_customers_dataset.csv
   type: pandas.CSVDataset
@@ -37,7 +36,6 @@ product_cats:
   type: pandas.CSVDataset
 
 #Merged dataset
-
 merged_dataset:
   filepath: data/02_intermediate/merged_dataset.csv
   type: pandas.CSVDataset

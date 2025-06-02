@@ -1,7 +1,7 @@
 from kedro.pipeline import node, pipeline
 from .nodes import *
 
-def create_pipeline(**kwargs):
+def create_data_pipeline(**kwargs):
     return pipeline([
         node(
             func=get_dataset_info,

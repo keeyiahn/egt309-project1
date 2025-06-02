@@ -7,7 +7,7 @@ def create_model_pipeline(**kwargs):
             node(
                 func=get_dataset_info,
                 inputs="cleaned_dataset",
-                outputs="dataframes"
+                outputs="dataframe"
             ),
 
         ]

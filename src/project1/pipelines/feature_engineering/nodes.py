@@ -11,7 +11,7 @@ from xgboost import XGBClassifier
 
 
 def get_dataset_info(*dataframes):
-    
+
     for df in dataframes:
         print(df.info())
     return dataframes
@@ -22,6 +22,8 @@ def preparing_dataset(df:pd.DataFrame) -> pd.DataFrame:
     df['order_approved_at'] = pd.to_datetime(df['order_approved_at'], dayfirst=True, errors='coerce')
     #drop all rows that are have duplicated order_id
     df.drop_duplicates(subset=['order_id'], inplace=True)
+
+    
     return df
 
 def one_hot_encode(df):
@@ -62,4 +64,37 @@ def splitting_buyers(df):
     print(df.info())
     print("Number of repeat buyers:", len(repeat_buyers_df))
     print("Number of non-repeat buyers:", len(non_repeat_buyers_df))
+    return df
+
+def dropping_columns(df):
+
+    #Creating delivery_days BEFORE dropping datetime columns
+    df['delivery_days'] = (
+    pd.to_datetime(df['order_delivered_customer_date'], errors='coerce') -
+    pd.to_datetime(df['order_purchase_timestamp'], errors='coerce')
+    ).dt.days
+
+    #Droping irrelevant columns AFTER creating new features
+    df.drop([
+        'order_id',
+        'customer_id',
+        'product_id',
+        'seller_id',
+        'order_purchase_timestamp',
+        'order_delivered_customer_date',
+        'order_estimated_delivery_date',
+        'customer_unique_id',
+        'shipping_limit_date',
+        'review_id',
+        'review_creation_date',
+        'review_answer_timestamp',
+        'product_category_name'
+    ], axis=1, inplace=True)
+
+
+    #Dropping rows with NaNs if any (from datetime conversion)
+    df.dropna(inplace=True)
+
+    #Verify result
+    print(df.info())
     return df

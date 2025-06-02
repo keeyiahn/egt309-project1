@@ -10,6 +10,9 @@ def create_model_pipeline(**kwargs):
                 outputs= ,
                 name= ,
             ),
-            
+
         ]
     )
+
+def hi():
+    return

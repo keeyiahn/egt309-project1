@@ -3,7 +3,7 @@
 from kedro.framework.project import find_pipelines
 from kedro.pipeline import Pipeline
 from .pipelines.data_processing import create_data_pipeline as data_processing_pipeline
-from .pipelines.feature_engineering import create_model_pipeline as feature_engineering_pipeline
+from .pipelines.feature_engineering import create_feature_pipeline as feature_engineering_pipeline
 
 
 def register_pipelines() -> dict[str, Pipeline]:

@@ -16,15 +16,11 @@ def get_dataset_info(df):
 def remove_dup_orders(df:pd.DataFrame) -> pd.DataFrame:
     #drop all rows that are have duplicated order_id
     df.drop_duplicates(subset=['order_id'], inplace=True)
-<<<<<<< HEAD
-=======
     return df
-
 
 def add_y_column(df):
     # prompt: create a column is_repeat_buyer such that if customer_unique_id is repeated, those rows are 1, while the ones with no repeated customer_unique_id are 0
     df['is_repeat_buyer'] = df['customer_unique_id'].duplicated(keep=False).astype(int)
->>>>>>> a0d6e6b15af8f8804b53e3791be99d102f5b0df4
     return df
 
 def one_hot_encode(df):

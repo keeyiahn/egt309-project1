@@ -5,30 +5,30 @@ def create_model_pipeline(**kwargs):
     return pipeline([
             node(
                 func=get_dataset_info,
-                inputs=["cleaned_dataset"],
-                outputs="dataframe"
+                inputs="cleaned_dataset",
+                outputs="01_cleaned_dataset"
             ),
             node(
-                func=preparing_dataset,
-                inputs=["cleaned_dataset"],
-                outputs="dataframe"
+                func=add_y_column,
+                inputs="01_cleaned_dataset",
+                outputs="transformed_dataset"
 
             ),
             node(
                 func=one_hot_encode,
-                inputs=["cleaned_dataset"],
-                outputs="dataframe"
+                inputs="transformed_dataset",
+                outputs="ohe_dataset"
 
             ),
             node(
-                func=splitting_buyers,
-                inputs=["cleaned_dataset"],
-                outputs="dataframe"
+                func=removing_non_repeat_buyers,
+                inputs="ohe_dataset",
+                outputs="truncated_dataset"
             ),
             node(
                 func=dropping_columns,
-                inputs=["cleaned_dataset"],
-                outputs="dataframe"
+                inputs="truncated_dataset",
+                outputs="output_dataset"
             )
 
 

@@ -7,7 +7,7 @@ from sklearn.metrics import classification_report, confusion_matrix, precision_r
 from sklearn.decomposition import PCA
 from collections import Counter
 import joblib
-from xgboost import XGBClassifier
+#from xgboost import XGBClassifier
 
 
 def get_dataset_info(*dataframes):
@@ -16,7 +16,7 @@ def get_dataset_info(*dataframes):
         print(df.info())
     return dataframes
 
-def preparing_dataset(df:pd.DataFrame) -> pd.DataFrame:
+def add_y_column(df:pd.DataFrame) -> pd.DataFrame:
 
     #create a column is_repeat_buyer such that if customer_unique_id is repeated, those rows are 1, while the ones with no repeated customer_unique_id are 0
     df['order_approved_at'] = pd.to_datetime(df['order_approved_at'], dayfirst=True, errors='coerce')
@@ -34,7 +34,7 @@ def one_hot_encode(df):
     print(df.info())
     return df
 
-def splitting_buyers(df):
+def removing_non_repeat_buyers(df):
 
     # For all the rows with is_repeat_buyer == 0, keep removing rows with most recent order_purchase_timestamp until number of rows with is_repeat_buyer==0 is 2 times number of rows with is_repeat_buyer==1
     # Also assuming 'order_purchase_timestamp' column exists and is in a sortable format (e.g., datetime objects)

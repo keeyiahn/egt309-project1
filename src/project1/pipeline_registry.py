@@ -2,6 +2,8 @@
 
 from kedro.framework.project import find_pipelines
 from kedro.pipeline import Pipeline
+from .pipelines.data_processing import create_data_pipeline as data_processing_pipeline
+from .pipelines.feature_engineering import create_model_pipeline as feature_engineering_pipeline
 
 
 def register_pipelines() -> dict[str, Pipeline]:
@@ -10,6 +12,8 @@ def register_pipelines() -> dict[str, Pipeline]:
     Returns:
         A mapping from pipeline names to ``Pipeline`` objects.
     """
-    pipelines = find_pipelines()
-    pipelines["__default__"] = sum(pipelines.values())
-    return pipelines
+    return {
+        "__default__": data_processing_pipeline(),
+        "data_processing": data_processing_pipeline(),
+        "feature_engineering": feature_engineering_pipeline(),
+    }

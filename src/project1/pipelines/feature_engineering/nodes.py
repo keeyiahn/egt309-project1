@@ -18,6 +18,7 @@ def remove_dup_orders(df:pd.DataFrame) -> pd.DataFrame:
     df.drop_duplicates(subset=['order_id'], inplace=True)
     return df
 
+
 def add_y_column(df):
     # prompt: create a column is_repeat_buyer such that if customer_unique_id is repeated, those rows are 1, while the ones with no repeated customer_unique_id are 0
     df['is_repeat_buyer'] = df['customer_unique_id'].duplicated(keep=False).astype(int)

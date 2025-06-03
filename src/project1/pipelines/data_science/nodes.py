@@ -1,11 +1,13 @@
 import pandas as pd
 import numpy as np
+from sklearn.preprocessing import 
 from sklearn.model_selection import train_test_split, StratifiedShuffleSplit, RandomizedSearchCV
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, confusion_matrix, precision_recall_curve, accuracy_score
 from sklearn.decomposition import PCA
 from collections import Counter
 import joblib
+
 #from xgboost import XGBClassifier
 
 def get_dataset_info(*dataframes):
@@ -15,7 +17,7 @@ def get_dataset_info(*dataframes):
     return dataframes
 
 
-def splitting_data(df):
+def splitting_data(df:pd.Dataframe) -> pd.Dataframe:
     # We use stratifiedshufflesplit instead of train_test_split to handle class imbalances
     # Features and target
     X = df.drop('is_repeat_buyer', axis=1)

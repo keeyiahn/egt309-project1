@@ -27,7 +27,7 @@ def create_model_pipeline(**kwargs):
             ),
             node(
                 func=dropping_columns,
-                inputs=["cleaned_dataset"]
+                inputs=["cleaned_dataset"],
                 outputs="dataframe"
             )
 

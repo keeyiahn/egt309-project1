@@ -22,8 +22,6 @@ def add_y_column(df:pd.DataFrame) -> pd.DataFrame:
     df['order_approved_at'] = pd.to_datetime(df['order_approved_at'], dayfirst=True, errors='coerce')
     #drop all rows that are have duplicated order_id
     df.drop_duplicates(subset=['order_id'], inplace=True)
-
-    
     return df
 
 def one_hot_encode(df):

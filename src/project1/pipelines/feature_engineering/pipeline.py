@@ -9,14 +9,19 @@ def create_feature_pipeline(**kwargs):
                 outputs="01_cleaned_dataset"
             ),
             node(
-                func=add_y_column,
+                func=remove_dup_orders,
                 inputs="01_cleaned_dataset",
-                outputs="transformed_dataset"
+                outputs="unique_orders_dataset"
+            ),
+            node(
+                func=add_y_column,
+                inputs="unique_orders_dataset",
+                outputs="y_col_dataset"
 
             ),
             node(
                 func=one_hot_encode,
-                inputs="transformed_dataset",
+                inputs="y_col_dataset",
                 outputs="ohe_dataset"
 
             ),

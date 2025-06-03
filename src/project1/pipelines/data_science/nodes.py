@@ -106,6 +106,45 @@ def classification(df, X_train, X_test, y_train, y_test):
 
     print("Confusion Matrix:\n")
     print(confusion_matrix(y_test, y_pred))
+    return clf
+
+def prediction(clf, X_test, X_train, y_test, y_train):
+
+    # Iterate training for clf using eval metric as f1 score for 5000 iterations
+    clf = XGBClassifier(
+    n_estimators=50, # Train for 5000 iterations
+    eval_metric='aucpr', # AUC-PR is often better for imbalanced datasets
+    random_state=42,
+    scale_pos_weight=scale_pos_weight
+    )
+
+    # Define evaluation set
+    eval_set = [(X_test, y_test)]
+
+    clf.fit(X_train, y_train, eval_set=eval_set, verbose=True)
+
+
+    # Accuracy scores (using the best model if early stopping occurred)
+    # Note: clf.score() uses the score method which defaults to accuracy.
+    # It's better to use predict and then calculate metrics like accuracy, precision, recall, f1.
+    train_pred = clf.predict(X_train)
+    test_pred = clf.predict(X_test)
+
+    # Calculate accuracy separately if needed
+    from sklearn.metrics import accuracy_score
+    train_acc = accuracy_score(y_train, train_pred)
+    test_acc = accuracy_score(y_test, test_pred)
+
+    print(f"Training Accuracy: {train_acc:.4f}")
+    print(f"Validation Accuracy: {test_acc:.4f}")
+
+    # Step 6: Evaluate using the classification report for F1 score
+    y_pred = clf.predict(X_test)
+    print("\nClassification Report:\n")
+    print(classification_report(y_test, y_pred))
+
+    print("Confusion Matrix:\n")
+    print(confusion_matrix(y_test, y_pred))
     return
 
 

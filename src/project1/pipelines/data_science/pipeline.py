@@ -7,19 +7,25 @@ def create_model_pipeline(**kwargs):
             node(
                 func=splitting_data,
                 inputs="output_dataset",
-                outputs=[""],
+                outputs=["X_train","X_test","y_train","y_test"],
             ),
 
             node(
-                func=reduce_columns,
-                inputs="",
-                outputs="",
+                func=pca,
+                inputs=["X_train","X_text"],
+                outputs=["X_train_pca","X_test_pca"],
             ),
 
             node(
-             func=training_model,
-             inputs="",
+             func=classification,
+             inputs=[""],
              outputs="",   
+            )
+
+            node(
+                func=
+                inputs=
+                outputs=
             )
 
     ])

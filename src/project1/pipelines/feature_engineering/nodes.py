@@ -9,21 +9,19 @@ from collections import Counter
 import joblib
 #from xgboost import XGBClassifier
 
+def get_dataset_info(df):
+    print(df.info())
+    return df
 
-def get_dataset_info(*dataframes):
-
-    for df in dataframes:
-        print(df.info())
-    return dataframes
-
-def add_y_column(df:pd.DataFrame) -> pd.DataFrame:
-
-    #create a column is_repeat_buyer such that if customer_unique_id is repeated, those rows are 1, while the ones with no repeated customer_unique_id are 0
-    df['order_approved_at'] = pd.to_datetime(df['order_approved_at'], dayfirst=True, errors='coerce')
+def remove_dup_orders(df:pd.DataFrame) -> pd.DataFrame:
     #drop all rows that are have duplicated order_id
     df.drop_duplicates(subset=['order_id'], inplace=True)
+    return df
 
-    
+
+def add_y_column(df):
+    # prompt: create a column is_repeat_buyer such that if customer_unique_id is repeated, those rows are 1, while the ones with no repeated customer_unique_id are 0
+    df['is_repeat_buyer'] = df['customer_unique_id'].duplicated(keep=False).astype(int)
     return df
 
 def one_hot_encode(df):

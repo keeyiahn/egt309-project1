@@ -10,13 +10,6 @@ import joblib
 
 #from xgboost import XGBClassifier
 
-def get_dataset_info(*dataframes):
-
-    for df in dataframes:
-        print(df.info())
-    return dataframes
-
-
 def splitting_data(df:pd.Dataframe) -> pd.Dataframe:
     # We use stratifiedshufflesplit instead of train_test_split to handle class imbalances
     # Features and target
@@ -46,9 +39,9 @@ def splitting_data(df:pd.Dataframe) -> pd.Dataframe:
 
     print("\nClass distribution in test set:")
     print(y_test.value_counts(normalize=True))
-    return df
+    return X_train, X_test, y_train, y_test
 
-def reduce_columns(X_train, X_test):
+def pca(X_train, X_test):
     # Use principal component analysis to reduce columns to 70 components
     # Initialize PCA with the desired number of components
     n_components = 70
@@ -74,9 +67,9 @@ def reduce_columns(X_train, X_test):
     # rf_model.fit(X_train_pca, y_train)
     # predictions = rf_model.predict(X_test_pca)
     # print(classification_report(y_test, predictions))
-    return X_train, X_test
+    return X_train_pca, X_test_pca
 
-def training_model(df, X_train, X_test):
+def classification(df, X_train, X_test, y_train, y_test):
     # Prepare features and target
     X = df.drop('is_repeat_buyer', axis=1)
     y = df['is_repeat_buyer']
@@ -113,5 +106,6 @@ def training_model(df, X_train, X_test):
 
     print("Confusion Matrix:\n")
     print(confusion_matrix(y_test, y_pred))
+    return
 
 

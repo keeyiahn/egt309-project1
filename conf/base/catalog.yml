@@ -44,3 +44,13 @@ merged_dataset:
 cleaned_dataset:
   filepath: data/02_intermediate/cleaned_dataset.csv
   type: pandas.CSVDataset
+
+#Transformed dataset
+transformed_dataset:
+  filepath: data/03_primary/transformed_dataset.csv
+  type: pandas.CSVDataset
+
+#Training dataset
+training_dataset:
+  filepath: data/03_primary/training_dataset.csv
+  type: pandas.CSVDataset

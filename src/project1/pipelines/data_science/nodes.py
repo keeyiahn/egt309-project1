@@ -6,10 +6,9 @@ from sklearn.metrics import classification_report, confusion_matrix, precision_r
 from sklearn.decomposition import PCA
 from collections import Counter
 import joblib
+from xgboost import XGBClassifier
 
-#from xgboost import XGBClassifier
-
-def splitting_data(df:pd.Dataframe) -> pd.Dataframe:
+def splitting_data(df):
     # We use stratifiedshufflesplit instead of train_test_split to handle class imbalances
     # Features and target
     X = df.drop('is_repeat_buyer', axis=1)
@@ -68,20 +67,12 @@ def pca(X_train, X_test):
     # print(classification_report(y_test, predictions))
     return X_train_pca, X_test_pca
 
-def classification(df, X_train, X_test, y_train, y_test):
-    # Prepare features and target
-    X = df.drop('is_repeat_buyer', axis=1)
-    y = df['is_repeat_buyer']
-
-
-    # Train-test split (stratify to preserve class ratio)
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, stratify=y, random_state=42)
-
+def model_training(X_train, X_test, y_train, y_test):
     # Calculate scale_pos_weight
     counter = Counter(y_train)
     scale_pos_weight = counter[0] / counter[1]
-    print(f"scale_pos_weight: {scale_pos_weight:.2f}")
+    print(f"scale_pos_weight: {scale_pos_weight:.2f}\n")
+    print("Training model...")
 
     # Train XGBoost
     # Removed use_label_encoder as it's deprecated
@@ -107,45 +98,5 @@ def classification(df, X_train, X_test, y_train, y_test):
     print(confusion_matrix(y_test, y_pred))
     return clf
 
-def prediction(clf, X_test, X_train, y_test, y_train):
-
-    # Iterate training for clf using eval metric as f1 score for 5000 iterations
-    clf = XGBClassifier(
-    n_estimators=50, # Train for 5000 iterations
-    eval_metric='aucpr', # AUC-PR is often better for imbalanced datasets
-    random_state=42,
-    scale_pos_weight=scale_pos_weight
-    )
-
-    # Define evaluation set
-    eval_set = [(X_test, y_test)]
-
-    clf.fit(X_train, y_train, eval_set=eval_set, verbose=True)
-
-
-    # Accuracy scores (using the best model if early stopping occurred)
-    # Note: clf.score() uses the score method which defaults to accuracy.
-    # It's better to use predict and then calculate metrics like accuracy, precision, recall, f1.
-    train_pred = clf.predict(X_train)
-    test_pred = clf.predict(X_test)
-
-    # Calculate accuracy separately if needed
-    from sklearn.metrics import accuracy_score
-    train_acc = accuracy_score(y_train, train_pred)
-    test_acc = accuracy_score(y_test, test_pred)
-
-    print(f"Training Accuracy: {train_acc:.4f}")
-    print(f"Validation Accuracy: {test_acc:.4f}")
-
-    # Evaluate using the classification report for F1 score
-    y_pred = clf.predict(X_test)
-    print("\nClassification Report:\n")
-    print(classification_report(y_test, y_pred))
-
-    print("Confusion Matrix:\n")
-    print(confusion_matrix(y_test, y_pred))
-    return clf
-
-def feature
 
 

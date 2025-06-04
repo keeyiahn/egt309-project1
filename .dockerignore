@@ -1,0 +1,3 @@
+# ignore all subfiles of folders in data/ except 01_raw
+data/*/*
+!data/01_raw/**

@@ -19,20 +19,4 @@ def create_model_pipeline(**kwargs):
              inputs=["X_train","X_test","y_train","y_test"],
              outputs="clf",   
             ),
-<<<<<<< HEAD
-
-            node(
-             func=classification,
-             inputs=["output_dataset, X_train, X_test,, y_train, y_test"],
-             outputs="classification_report",   
-            ),
-
-            node(
-                func=prediction,
-                inputs="classification_report"
-                outputs=""
-            ),
-
-=======
->>>>>>> 8b74da313c79b71bfec40c37eb6ea955d20abca0
     ])

@@ -54,3 +54,8 @@ transformed_dataset:
 training_dataset:
   filepath: data/03_primary/training_dataset.csv
   type: pandas.CSVDataset
+
+#Data for model prediction
+inference_dataset:
+  filepath: data/03_primary/inference_dataset.csv
+  type: pandas.CSVDataset

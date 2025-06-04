@@ -47,6 +47,6 @@ def create_feature_pipeline(**kwargs):
             node(
                 func=init_potential_buyers,
                 inputs=["normalized_dataset_2", "non_repeat_dataset"],
-                outputs=["training_dataset", "prediction_dataset"]
+                outputs=["training_dataset", "inference_dataset"]
             )
     ])

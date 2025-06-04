@@ -33,10 +33,6 @@ def one_hot_encode(df):
     return df
 
 def removing_non_repeat_buyers(df):
-
-    # For all the rows with is_repeat_buyer == 0, keep removing rows with most recent order_purchase_timestamp until number of rows with is_repeat_buyer==0 is 2 times number of rows with is_repeat_buyer==1
-    # Also assuming 'order_purchase_timestamp' column exists and is in a sortable format (e.g., datetime objects)
-    # Ensure 'order_purchase_timestamp' is in datetime format
     df['order_purchase_timestamp'] = pd.to_datetime(df['order_purchase_timestamp'])
 
     # Separate the DataFrame into repeat and non-repeat buyers
@@ -47,7 +43,7 @@ def removing_non_repeat_buyers(df):
     non_repeat_buyers_df = non_repeat_buyers_df.sort_values(by='order_purchase_timestamp', ascending=False)
 
     # Calculate the target number of non-repeat buyer rows
-    target_non_repeat_count = 3 * len(repeat_buyers_df)
+    target_non_repeat_count = len(repeat_buyers_df)
 
     # While the number of non-repeat buyer rows is greater than the target,
     # remove the row with the most recent order timestamp

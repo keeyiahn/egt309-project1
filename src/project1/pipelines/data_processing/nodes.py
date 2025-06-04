@@ -121,13 +121,13 @@ def clean_dataset(df: pd.DataFrame) -> pd.DataFrame:
 
     # Apply the imputation row-wise
     df = df.apply(impute_with_category_mean, axis=1)
+    df.dropna(inplace=True)
 
     print("---- AFTER CLEANING ----")
     print(df.shape)
     print(df.columns)
     print(f"Duplicated rows: {df.duplicated().sum()}")
     print(f"Missing values:\n{df.isna().sum()}")
-    print("hi"+str(df.isnull().sum()))
     
     return df
 

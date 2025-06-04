@@ -18,14 +18,14 @@ def create_model_pipeline(**kwargs):
 
             node(
              func=classification,
-             inputs=[""],
-             outputs="",   
-            )
+             inputs=["output_dataset, X_train, X_test,, y_train, y_test"],
+             outputs="classification_report",   
+            ),
 
             node(
-                func=
-                inputs=
-                outputs=
-            )
+                func=prediction,
+                inputs="classification_report"
+                outputs=""
+            ),
 
     ])

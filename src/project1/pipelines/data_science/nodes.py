@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-from sklearn.preprocessing import 
 from sklearn.model_selection import train_test_split, StratifiedShuffleSplit, RandomizedSearchCV
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, confusion_matrix, precision_recall_curve, accuracy_score
@@ -93,13 +92,13 @@ def classification(df, X_train, X_test, y_train, y_test):
     )
     clf.fit(X_train, y_train)
 
-    # Step 5: Accuracy scores
+    # Accuracy scores
     train_acc = clf.score(X_train, y_train)
     test_acc = clf.score(X_test, y_test)
     print(f"Training Accuracy: {train_acc:.4f}")
     print(f"Validation Accuracy: {test_acc:.4f}")
 
-    # Step 6: Evaluate
+    # Evaluate
     y_pred = clf.predict(X_test)
     print("\nClassification Report:\n")
     print(classification_report(y_test, y_pred))
@@ -138,13 +137,15 @@ def prediction(clf, X_test, X_train, y_test, y_train):
     print(f"Training Accuracy: {train_acc:.4f}")
     print(f"Validation Accuracy: {test_acc:.4f}")
 
-    # Step 6: Evaluate using the classification report for F1 score
+    # Evaluate using the classification report for F1 score
     y_pred = clf.predict(X_test)
     print("\nClassification Report:\n")
     print(classification_report(y_test, y_pred))
 
     print("Confusion Matrix:\n")
     print(confusion_matrix(y_test, y_pred))
-    return
+    return clf
+
+def feature
 
 

@@ -9,14 +9,14 @@ def create_feature_pipeline(**kwargs):
                 outputs="01_cleaned_dataset",
             ),
             node(
-                func=remove_dup_orders,
+                func=add_y_column,
                 inputs="01_cleaned_dataset",
-                outputs="unique_orders_dataset",
+                outputs="y_col_dataset",
             ),
             node(
-                func=add_y_column,
-                inputs="unique_orders_dataset",
-                outputs="y_col_dataset",
+                func=remove_dup_orders,
+                inputs="y_col_dataset",
+                outputs="unique_orders_dataset",
 
             ),
             node(

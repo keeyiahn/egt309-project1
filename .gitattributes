@@ -3,11 +3,7 @@ data/01_raw/olist_order_payments_dataset.csv filter=lfs diff=lfs merge=lfs -text
 data/01_raw/olist_orders_dataset.csv filter=lfs diff=lfs merge=lfs -text
 data/01_raw/olist_products_dataset.csv filter=lfs diff=lfs merge=lfs -text
 data/01_raw/olist_sellers_dataset.csv filter=lfs diff=lfs merge=lfs -text
-data/02_intermediate/cleaned_dataset.csv filter=lfs diff=lfs merge=lfs -text
 data/01_raw/olist_customers_dataset.csv filter=lfs diff=lfs merge=lfs -text
 data/01_raw/olist_geolocation_dataset.csv filter=lfs diff=lfs merge=lfs -text
-data/03_primary/training_dataset.csv filter=lfs diff=lfs merge=lfs -text
-data/02_intermediate/merged_dataset.csv filter=lfs diff=lfs merge=lfs -text
-data/03_primary/inference_dataset.csv filter=lfs diff=lfs merge=lfs -text
 data/01_raw/olist_order_reviews_dataset.csv filter=lfs diff=lfs merge=lfs -text
 data/01_raw/product_category_name_translation.csv filter=lfs diff=lfs merge=lfs -text

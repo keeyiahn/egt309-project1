@@ -59,3 +59,4 @@ training_dataset:
 inference_dataset:
   filepath: data/03_primary/inference_dataset.csv
   type: pandas.CSVDataset
+

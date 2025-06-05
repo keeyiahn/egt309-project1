@@ -4,10 +4,11 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from typing import Dict, Tuple, Any
 import logging
+# ML libraries
 from sklearn.metrics import (
     classification_report, confusion_matrix, roc_curve, auc,
     precision_recall_curve, average_precision_score, accuracy_score,
-    f1_score, precision_score, recall_score
+    f1_score, precision_score, recall_score, roc_auc_score
 )
 from sklearn.model_selection import learning_curve
 import plotly.graph_objects as go

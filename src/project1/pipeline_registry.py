@@ -15,7 +15,8 @@ def register_pipelines() -> dict[str, Pipeline]:
         A mapping from pipeline names to ``Pipeline`` objects.
     """
     return {
-        "__default__": data_processing_pipeline() + feature_engineering_pipeline() + model_pipeline(),
+        "__default__": data_processing_pipeline() + feature_engineering_pipeline() + model_pipeline() + reporting_pipeline(),
+        "__ml__": model_pipeline() + reporting_pipeline(),
         "data_processing": data_processing_pipeline(),
         "feature_engineering": feature_engineering_pipeline(),
         "data_science": model_pipeline(),

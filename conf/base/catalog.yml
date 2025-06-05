@@ -52,11 +52,15 @@ transformed_dataset:
 
 #Training dataset
 training_dataset:
-  filepath: data/03_primary/training_dataset.csv
+  filepath: data/05_model_input/training_dataset.csv
   type: pandas.CSVDataset
 
 #Data for model prediction
 inference_dataset:
-  filepath: data/03_primary/inference_dataset.csv
+  filepath: data/05_model_input/inference_dataset.csv
   type: pandas.CSVDataset
 
+clf:
+  type: pickle.PickleDataset
+  filepath: data/06_models/classifier.pickle
+  versioned: true

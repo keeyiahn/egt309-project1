@@ -49,8 +49,6 @@ def prediction(clf, potential_repeat, X_train):
     # Create a DataFrame with rows from potential_repeat where is_repeat_buyer is predicted as 1
     predicted_repeat_df = potential_repeat[potential_repeat_predictions == 1].copy()
 
-    print("\nDataFrame with potential repeat buyers (predicted is_repeat_buyer == 1):")
-    predicted_repeat_df.head()
     return predicted_repeat_df
 
 

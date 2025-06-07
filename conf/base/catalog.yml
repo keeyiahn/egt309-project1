@@ -64,3 +64,5 @@ clf:
   type: pickle.PickleDataset
   filepath: data/06_models/classifier.pickle
   versioned: true
+
+predicted_buyer

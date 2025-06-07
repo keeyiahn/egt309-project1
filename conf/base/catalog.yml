@@ -35,34 +35,39 @@ product_cats:
   filepath: data/01_raw/product_category_name_translation.csv
   type: pandas.CSVDataset
 
-#Merged dataset
+# Merged dataset
 merged_dataset:
   filepath: data/02_intermediate/merged_dataset.csv
   type: pandas.CSVDataset
 
-#Cleaned dataset
+# Cleaned dataset
 cleaned_dataset:
   filepath: data/02_intermediate/cleaned_dataset.csv
   type: pandas.CSVDataset
 
-#Transformed dataset
+# Transformed dataset
 transformed_dataset:
   filepath: data/03_primary/transformed_dataset.csv
   type: pandas.CSVDataset
 
-#Training dataset
+# Training dataset
 training_dataset:
   filepath: data/05_model_input/training_dataset.csv
   type: pandas.CSVDataset
 
-#Data for model prediction
+# Data for model prediction
 inference_dataset:
   filepath: data/05_model_input/inference_dataset.csv
   type: pandas.CSVDataset
 
+# Classifier model
 clf:
   type: pickle.PickleDataset
   filepath: data/06_models/classifier.pickle
   versioned: true
 
-predicted_buyer
+# Predicted repeat buyers on inference_dataset
+predicted_repeated_df:
+  filepath: data/07_predictions/predicted_repeated_df.csv
+  type: pandas.CSVDataset
+

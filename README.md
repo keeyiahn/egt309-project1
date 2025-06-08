@@ -1,6 +1,9 @@
 Prerequisites:
 1. Docker
 
+Functionalities:
+1. ```uv``` over ```pip``` because it is more modern, hundreds of times faster (built on Rust instead of Python)
+2. Deprecated use of Git LFS due to insufficient bandwidth, ```wget``` to retrieve data from GitHub instead (refer to Dockerfile)
 
 How to run:
 1. Install .zip

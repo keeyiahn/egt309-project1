@@ -7,6 +7,9 @@ from sklearn.decomposition import PCA
 from collections import Counter
 import joblib
 from xgboost import XGBClassifier
+from matplotlib import pyplot as plt
+import seaborn as sns
+
 
 def splitting_data(df):
     # We use stratifiedshufflesplit instead of train_test_split to handle class imbalances
@@ -94,9 +97,20 @@ def model_training(X_train, X_test, y_train, y_test):
     print("\nClassification Report:\n")
     print(classification_report(y_test, y_pred))
 
-    print("Confusion Matrix:\n")
-    print(confusion_matrix(y_test, y_pred))
-    return clf
+    # Generate the confusion matrix
+    cm = confusion_matrix(y_test, y_pred)
+
+    # Plot the confusion matrix using Seaborn
+    cm_figure = plt.figure(figsize=(8, 6))
+    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', cbar=False,
+                xticklabels=['Predicted non-repeat', 'Predicted repeat'],
+                yticklabels=['Actual non-repeat', 'Actual repeat'])
+    plt.xlabel('Predicted Label')
+    plt.ylabel('True Label')
+    plt.title('Confusion Matrix')
+    plt.show()
+
+    return clf, cm_figure
 
 
 

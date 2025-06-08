@@ -66,6 +66,11 @@ clf:
   filepath: data/06_models/classifier.pickle
   versioned: true
 
+# Confusion matrix
+confusion_matrix:
+  filepath: data/06_models/confusion_matrix.png
+  type: matplotlib.MatplotlibWriter
+
 # Predicted repeat buyers on inference_dataset
 predicted_repeated_df:
   filepath: data/07_predictions/predicted_repeated_df.csv

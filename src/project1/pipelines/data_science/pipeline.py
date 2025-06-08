@@ -17,6 +17,6 @@ def create_model_pipeline(**kwargs):
             node(
              func=model_training,
              inputs=["X_train","X_test","y_train","y_test"],
-             outputs="clf",   
+             outputs=["clf","confusion_matrix"] 
             ),
     ])
